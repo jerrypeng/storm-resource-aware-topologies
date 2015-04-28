@@ -161,7 +161,7 @@ public class LinearTopology {
 
     conf.setDebug(false);
     if (args != null && args.length > 0) {
-        conf.setNumWorkers(24);
+        conf.setNumWorkers(12);
         StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
     }
   }
