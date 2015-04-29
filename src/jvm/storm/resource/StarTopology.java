@@ -18,12 +18,14 @@ import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
+import backtype.storm.utils.Utils;
 
 public class StarTopology {
 	public static void doWork(int level) {
 		for(int i=0; i<level; i++){
 			double sum = 1000.0/34.0*232.0;
 		}
+		Utils.sleep(5);
 	}
 	
 	public static class StarSpout extends BaseRichSpout {
@@ -65,7 +67,7 @@ public class StarTopology {
 	    }
 	    @Override
 	    public void execute(Tuple tuple) {
-	    	doWork(1,2);
+	    	doWork(this.level);
 	        _collector.emit(tuple, new Values(tuple.getString(0) + "!"));
 	        //_collector.ack(tuple);
 	    }
