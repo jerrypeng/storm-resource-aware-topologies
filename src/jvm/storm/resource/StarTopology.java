@@ -87,18 +87,18 @@ public class StarTopology {
 
 		BoltDeclarer center = builder.setBolt("center", new StarBolt(100),
 				paralellism*2);
-		center.setCPULoad(25.0);
+		center.setCPULoad(10.0);
 
 		for (int i = 0; i < numSpout; i++) {
 			SpoutDeclarer spout = builder.setSpout("spout_" + i, new StarSpout(1000), paralellism);
 			center.shuffleGrouping("spout_" + i);
-			spout.setCPULoad(40.0);
+			spout.setCPULoad(30.0);
 		}
 
 		for (int i = 0; i < numBolt; i++) {
 			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new StarBolt(100), paralellism)
 					.shuffleGrouping("center");
-			bolt.setCPULoad(15.0);
+			bolt.setCPULoad(10.0);
 		}
 		
 		
