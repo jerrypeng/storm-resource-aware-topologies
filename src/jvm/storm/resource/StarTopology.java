@@ -9,6 +9,7 @@ import backtype.storm.topology.SpoutDeclarer;
 import backtype.storm.topology.TopologyBuilder;
 
 public class StarTopology {
+	
 	public static void main(String[] args) throws Exception {
 		int numSpout = 2;
 		int numBolt = 2;
@@ -18,7 +19,7 @@ public class StarTopology {
 
 		BoltDeclarer center = builder.setBolt("center", new TestBolt(),
 				paralellism*2);
-		center.setCPULoad(15.0);
+		center.setCPULoad(35.0);
 
 		for (int i = 0; i < numSpout; i++) {
 			SpoutDeclarer spout = builder.setSpout("spout_" + i, new TestSpout(), paralellism);
@@ -29,7 +30,7 @@ public class StarTopology {
 		for (int i = 0; i < numBolt; i++) {
 			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new TestBolt(), paralellism)
 					.shuffleGrouping("center");
-			bolt.setCPULoad(15.0);
+			bolt.setCPULoad(20.0);
 		}
 		
 		
