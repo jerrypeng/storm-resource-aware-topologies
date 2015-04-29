@@ -24,13 +24,13 @@ public class StarTopology {
 		for (int i = 0; i < numSpout; i++) {
 			SpoutDeclarer spout = builder.setSpout("spout_" + i, new TestSpout(), paralellism);
 			center.shuffleGrouping("spout_" + i);
-			spout.setCPULoad(50.0);
+			spout.setCPULoad(40.0);
 		}
 
 		for (int i = 0; i < numBolt; i++) {
 			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new TestBolt(), paralellism)
 					.shuffleGrouping("center");
-			bolt.setCPULoad(20.0);
+			bolt.setCPULoad(15.0);
 		}
 		
 		
