@@ -34,7 +34,8 @@ public class StarTopology {
 		
 		
 		Config conf = new Config();
-		conf.setDebug(true);
+		conf.setDebug(false);
+		conf.put(Config.TOPOLOGY_DEBUG, false);
 		
 		conf.setNumAckers(0);
 
