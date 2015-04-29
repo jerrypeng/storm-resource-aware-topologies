@@ -25,7 +25,7 @@ public class StarTopology {
 		for(int i=0; i<level; i++){
 			double sum = 1000.0/34.0*232.0;
 		}
-		Utils.sleep(5);
+		
 	}
 	
 	public static class StarSpout extends BaseRichSpout {
@@ -42,6 +42,7 @@ public class StarTopology {
 	    @Override
 	    public void nextTuple() {
 	        doWork(this.level);
+	        Utils.sleep(10);
 	        _collector.emit(new Values("Jerry"));
 	    }
 	    @Override
@@ -80,13 +81,13 @@ public class StarTopology {
 	public static void main(String[] args) throws Exception {
 		int numSpout = 2;
 		int numBolt = 2;
-		int paralellism = 3*2;
+		int paralellism = 3*2*2;
 
 		TopologyBuilder builder = new TopologyBuilder();
 
 		BoltDeclarer center = builder.setBolt("center", new StarBolt(100),
 				paralellism*2);
-		center.setCPULoad(15.0);
+		center.setCPULoad(25.0);
 
 		for (int i = 0; i < numSpout; i++) {
 			SpoutDeclarer spout = builder.setSpout("spout_" + i, new StarSpout(1000), paralellism);
