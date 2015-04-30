@@ -1,6 +1,7 @@
 package storm.resource;
 
 import java.util.Map;
+import java.util.Random;
 
 import storm.resource.bolt.TestBolt;
 import storm.resource.spout.TestSpout;
@@ -22,9 +23,10 @@ import backtype.storm.utils.Utils;
 
 public class StarTopology {
 	public static void doWork(int level) {
-		for(int i=0; i<level; i++){
-			double sum = 1000.0/34.0*232.0;
-		}
+		double calc=0.0;
+		  for(double i=0; i<level; i++) {
+			  calc+=i/3.0*4.5+1.3;
+		  }
 		
 	}
 	
@@ -41,9 +43,11 @@ public class StarTopology {
 	    }
 	    @Override
 	    public void nextTuple() {
-	        doWork(this.level);
-	        Utils.sleep(10);
-	        _collector.emit(new Values("Jerry"));
+	    	//doWork(this.level);
+	    	 Random randomGenerator = new Random();
+	    	 Integer randomInt = randomGenerator.nextInt(1000000000);
+		    _collector.emit(new Values("jerry"), randomInt);
+		  
 	    }
 	    @Override
 	    public void ack(Object id) {
@@ -68,9 +72,9 @@ public class StarTopology {
 	    }
 	    @Override
 	    public void execute(Tuple tuple) {
-	    	doWork(this.level);
+	    	//doWork(this.level);
 	        _collector.emit(tuple, new Values(tuple.getString(0) + "!"));
-	        //_collector.ack(tuple);
+	        _collector.ack(tuple);
 	    }
 	    @Override
 	    public void declareOutputFields(OutputFieldsDeclarer declarer) {
@@ -106,7 +110,7 @@ public class StarTopology {
 		conf.setDebug(false);
 		conf.put(Config.TOPOLOGY_DEBUG, false);
 		
-		conf.setNumAckers(0);
+		//conf.setNumAckers(0);
 
 		conf.setNumWorkers(12);
 		
