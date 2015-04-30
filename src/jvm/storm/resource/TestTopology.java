@@ -23,7 +23,7 @@ import backtype.storm.utils.Utils;
 public class TestTopology {
 	public static void doWork(int level) {
 		recFibN(level);
-		Utils.sleep(10);
+		Utils.sleep(5);
 	}
 	public static long recFibN(final int n)
 	{
@@ -82,10 +82,10 @@ public class TestTopology {
 
         TopologyBuilder builder = new TopologyBuilder();
 
-        SpoutDeclarer spout = builder.setSpout("spout_head", new TestTopologySpout(5), paralellism);
+        SpoutDeclarer spout = builder.setSpout("spout_head", new TestTopologySpout(10), paralellism);
         spout.setCPULoad(50.0);
 
-        BoltDeclarer output = builder.setBolt("bolt_output_3", new TestTopologyBolt(5), paralellism);
+        BoltDeclarer output = builder.setBolt("bolt_output_3", new TestTopologyBolt(10), paralellism);
         output.shuffleGrouping("spout_head");
        
         output.setCPULoad(15.0);
