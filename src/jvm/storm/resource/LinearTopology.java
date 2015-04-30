@@ -145,13 +145,13 @@ public class LinearTopology {
     spout.setCPULoad(15.0);
     
     bolt_1.shuffleGrouping("word");
-    bolt_1.setCPULoad(30.0);
+    bolt_1.setCPULoad(25.0);
     
     bolt_2.shuffleGrouping("exclaim1");
-    bolt_2.setCPULoad(30.0);
+    bolt_2.setCPULoad(25.0);
     
     bolt_3.shuffleGrouping("exclaim2");
-    bolt_3.setCPULoad(30.0);
+    bolt_3.setCPULoad(25.0);
     Config conf = new Config();
     conf.setNumAckers(0);
 
