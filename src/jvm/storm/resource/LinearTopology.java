@@ -141,7 +141,7 @@ public class LinearTopology {
   }
   public static void main(String[] args) throws Exception {
     TopologyBuilder builder = new TopologyBuilder();
-    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(), 8*2.0);
+    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(), 8);
     BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt5(), 4*2);
     BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt6(), 4*2);
     BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt7(), 4*2);
