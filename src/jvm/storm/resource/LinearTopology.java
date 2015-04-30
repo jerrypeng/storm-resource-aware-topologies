@@ -24,7 +24,23 @@ import backtype.storm.topology.base.BaseRichSpout;
 * This is a basic example of a Storm topology.
 */
 public class LinearTopology {
+//	spout
+//	20->5%
+//	1,2 -> 10%
+//	1,4->22%
+//	1,5->27%
+//	1,6->30%
+//	4 7 1 -> 50%
+//
+//
+//	bolt
+//
+//	20->3%
+//	1,2 -> 10%
+//	1,4->22%
+//	1,5->26%
 
+	
 	 //cpu workload 
 	  public static boolean isPrime(int n) 
 	  {
@@ -120,21 +136,21 @@ public class LinearTopology {
 
   public static void main(String[] args) throws Exception {
     TopologyBuilder builder = new TopologyBuilder();
-    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(4, 7, 1), 10);
-    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt(1,2,5), 20);
-    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt(1,2,5), 20);
-    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt(1,2,5), 20);
+    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(4, 7, 1), 15);
+    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt(1,2,5), 28);
+    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt(1,2,5), 28);
+    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt(1,2,5), 28);
     
-    spout.setCPULoad(50.0);
+    spout.setCPULoad(40.0);
     
     bolt_1.shuffleGrouping("word");
-    bolt_1.setCPULoad(10.0);
+    bolt_1.setCPULoad(7.0);
     
     bolt_2.shuffleGrouping("exclaim1");
-    bolt_2.setCPULoad(10.0);
+    bolt_2.setCPULoad(7.0);
     
     bolt_3.shuffleGrouping("exclaim2");
-    bolt_3.setCPULoad(10.0);
+    bolt_3.setCPULoad(7.0);
     Config conf = new Config();
     conf.setNumAckers(0);
 
