@@ -40,7 +40,7 @@ public class LinearTopology {
     int max=2;
     //find the largest prime number within [1,input]
     // percentage index up to 70% percentage = 10*index
-    int[] cpu_para = new int[] {65,65,65,120,190,260,440,660};
+    int[] cpu_para = new int[] {35,35,35,90,190,260,440,660};
     for(int j=0; j<time_loop ; j++)
     {
       for(int i =300; i<2000; i++)
@@ -141,10 +141,10 @@ public class LinearTopology {
   }
   public static void main(String[] args) throws Exception {
     TopologyBuilder builder = new TopologyBuilder();
-    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(), 8*1.0);
-    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt5(), 4*1);
-    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt6(), 4*1);
-    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt7(), 4*1);
+    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(), 8*2.0);
+    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt5(), 4*2);
+    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt6(), 4*2);
+    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt7(), 4*2);
     
     spout.setCPULoad(60.0);
     
