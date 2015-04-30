@@ -141,21 +141,21 @@ public class LinearTopology {
   }
   public static void main(String[] args) throws Exception {
     TopologyBuilder builder = new TopologyBuilder();
-    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(), 8);
-    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt5(), 4*2);
-    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt6(), 4*2);
-    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt7(), 4*2);
+    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(), 22);
+    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt5(), 16);
+    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt6(), 16);
+    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt7(), 16);
     
-    spout.setCPULoad(60.0);
+    spout.setCPULoad(30.0);
     
     bolt_1.shuffleGrouping("word");
-    bolt_1.setCPULoad(20.0);
+    bolt_1.setCPULoad(10.0);
     
     bolt_2.shuffleGrouping("exclaim1");
-    bolt_2.setCPULoad(20.0);
+    bolt_2.setCPULoad(10.0);
     
     bolt_3.shuffleGrouping("exclaim2");
-    bolt_3.setCPULoad(20.0);
+    bolt_3.setCPULoad(10.0);
     Config conf = new Config();
     conf.setNumAckers(0);
 
