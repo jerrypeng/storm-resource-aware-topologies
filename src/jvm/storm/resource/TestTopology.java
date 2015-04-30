@@ -171,19 +171,16 @@ public class TestTopology {
         TopologyBuilder builder = new TopologyBuilder();
 
         SpoutDeclarer spout = builder.setSpout("spout_head_1", new TestTopologySpout(Integer.parseInt(args[1])), paralellism);
-        spout.setCPULoad(50.0);
 
         BoltDeclarer output = builder.setBolt("bolt_output_1", new TestTopologyBolt(Integer.parseInt(args[1])), paralellism);
         output.shuffleGrouping("spout_head_1");
         
         SpoutDeclarer spout2 = builder.setSpout("spout_head_2", new TestTopologySpout2(Integer.parseInt(args[2]), Integer.parseInt(args[3])), paralellism);
-        spout.setCPULoad(50.0);
 
         BoltDeclarer output2 = builder.setBolt("bolt_output_2", new TestTopologyBolt2(Integer.parseInt(args[2]), Integer.parseInt(args[3])), paralellism);
-        output.shuffleGrouping("spout_head_2");
+        output2.shuffleGrouping("spout_head_2");
        
        
-        output.setCPULoad(15.0);
 
         Config conf = new Config();
         //conf.setDebug(true);
