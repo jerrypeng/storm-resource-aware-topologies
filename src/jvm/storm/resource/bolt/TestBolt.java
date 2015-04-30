@@ -1,6 +1,7 @@
 package storm.resource.bolt;
 import java.util.Map;
 
+import storm.resource.BusyWork.BusyWork;
 import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
 import backtype.storm.task.OutputCollector;
@@ -23,6 +24,7 @@ public class TestBolt extends BaseRichBolt{
     }
     @Override
     public void execute(Tuple tuple) {
+    	BusyWork.doWork(1000);
       _collector.emit(tuple, new Values(tuple.getString(0)));
       //_collector.ack(tuple);
     }
