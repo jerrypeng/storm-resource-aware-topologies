@@ -31,7 +31,7 @@ public class TestTopology {
 	    }
 	    return ret;
 	  }
-	  public static int PrimeSearch(int time_loop,int index)
+	  public static int PrimeSearch(int time_loop,int index, long sleeptime)
 	  {
 	    int max=2;
 	    //find the largest prime number within [1,input]
@@ -44,7 +44,7 @@ public class TestTopology {
 	          if(i%cpu_para[index]==0)
 	          {
 	            try {
-	                Thread.sleep(5);
+	                Thread.sleep(sleeptime);
 	            } 
 	            catch (InterruptedException ie) {
 	                   //Handle exception
@@ -92,7 +92,8 @@ public class TestTopology {
 		    OutputCollector _collector;
 		    int time_loop=0;
 		    int index=0;
-		    public TestTopologyBolt2(int time_loop,int index) {
+		    long sleeptime=0;
+		    public TestTopologyBolt2(int time_loop,int index, long sleeptime) {
 		 		this.time_loop = time_loop;
 		 		this.index = index;
 		 	}
@@ -102,7 +103,7 @@ public class TestTopology {
 		    }
 		    @Override
 		    public void execute(Tuple tuple) {
-		    	PrimeSearch(this.time_loop, this.index);
+		    	PrimeSearch(this.time_loop, this.index, this.sleeptime);
 		        _collector.emit(tuple, new Values(tuple.getString(0) + "!"));
 		        //_collector.ack(tuple);
 		    }
@@ -141,7 +142,8 @@ public class TestTopology {
 		    SpoutOutputCollector _collector;
 		    int time_loop=0;
 		    int index=0;
-		    public TestTopologySpout2(int time_loop,int index) {
+		    long sleeptime=0;
+		    public TestTopologySpout2(int time_loop,int index, long sleeptime) {
 		 		this.time_loop = time_loop;
 		 		this.index = index;
 		 	}
@@ -151,7 +153,7 @@ public class TestTopology {
 		    }
 		    @Override
 		    public void nextTuple() {
-		    	PrimeSearch(this.time_loop, this.index);
+		    	PrimeSearch(this.time_loop, this.index, this.sleeptime);
 		        _collector.emit(new Values("Jerry"));
 		    }
 		    @Override
@@ -175,9 +177,9 @@ public class TestTopology {
         BoltDeclarer output = builder.setBolt("bolt_output_1", new TestTopologyBolt(Integer.parseInt(args[1])), paralellism);
         output.shuffleGrouping("spout_head_1");
         
-        SpoutDeclarer spout2 = builder.setSpout("spout_head_2", new TestTopologySpout2(Integer.parseInt(args[2]), Integer.parseInt(args[3])), paralellism);
+        SpoutDeclarer spout2 = builder.setSpout("spout_head_2", new TestTopologySpout2(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4])), paralellism);
 
-        BoltDeclarer output2 = builder.setBolt("bolt_output_2", new TestTopologyBolt2(Integer.parseInt(args[2]), Integer.parseInt(args[3])), paralellism);
+        BoltDeclarer output2 = builder.setBolt("bolt_output_2", new TestTopologyBolt2(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4])), paralellism);
         output2.shuffleGrouping("spout_head_2");
        
        
