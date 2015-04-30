@@ -10,7 +10,7 @@ import backtype.storm.topology.TopologyBuilder;
 
 public class DiamondTopology {
 	public static void main(String[] args) throws Exception {
-		int paralellism = 4;
+		int paralellism = 8;
 
         TopologyBuilder builder = new TopologyBuilder();
 
@@ -34,7 +34,7 @@ public class DiamondTopology {
        bolt4.shuffleGrouping("spout_head");
        bolt4.setCPULoad(15.0);
 
-        BoltDeclarer output = builder.setBolt("bolt_output_3", new TestBolt(), paralellism).setNumTasks(6);
+        BoltDeclarer output = builder.setBolt("bolt_output_3", new TestBolt(), paralellism);
         output.shuffleGrouping("bolt_1");
         output.shuffleGrouping("bolt_2");
         output.shuffleGrouping("bolt_3");
