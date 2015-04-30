@@ -136,10 +136,10 @@ public class LinearTopology {
 
   public static void main(String[] args) throws Exception {
     TopologyBuilder builder = new TopologyBuilder();
-    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(1, 4, 5), 6);
-    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt(1,2,5), 4);
-    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt(1,2,5), 4);
-    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt(1,2,5), 4);
+    SpoutDeclarer spout = builder.setSpout("word", new LinearSpout(1, 4, 50), 6);
+    BoltDeclarer bolt_1 = builder.setBolt("exclaim1", new LinearBolt(1,2,50), 4);
+    BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt(1,2,50), 4);
+    BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt(1,2,50), 4);
     
     spout.setCPULoad(60.0);
     
