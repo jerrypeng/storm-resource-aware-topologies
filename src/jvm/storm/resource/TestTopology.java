@@ -36,7 +36,7 @@ public class TestTopology {
 	    int max=2;
 	    //find the largest prime number within [1,input]
 	    // percentage index up to 70% percentage = 10*index
-	    int[] cpu_para = new int[] {35,35,35,90,190,260,440,660};
+	    int[] cpu_para = new int[] {65,65,65,120,190,260,440,660};
 	    for(int j=0; j<time_loop ; j++)
 	    {
 	      for(int i =300; i<2000; i++)
