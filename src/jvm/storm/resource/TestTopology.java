@@ -180,7 +180,7 @@ public class TestTopology {
         spout.setCPULoad(50.0);
 
         BoltDeclarer output2 = builder.setBolt("bolt_output_2", new TestTopologyBolt2(Integer.parseInt(args[2]), Integer.parseInt(args[3])), paralellism);
-        output.shuffleGrouping("spout_hea_2");
+        output.shuffleGrouping("spout_head_2");
        
        
         output.setCPULoad(15.0);
