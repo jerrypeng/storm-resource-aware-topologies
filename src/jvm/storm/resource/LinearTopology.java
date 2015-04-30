@@ -142,16 +142,16 @@ public class LinearTopology {
     BoltDeclarer bolt_2 = builder.setBolt("exclaim2", new LinearBolt(1,2,5), 6);
     BoltDeclarer bolt_3 = builder.setBolt("exclaim_output_3", new LinearBolt(1,2,5), 6);
     
-    spout.setCPULoad(15.0);
+    spout.setCPULoad(40.0);
     
     bolt_1.shuffleGrouping("word");
-    bolt_1.setCPULoad(25.0);
+    bolt_1.setCPULoad(20.0);
     
     bolt_2.shuffleGrouping("exclaim1");
-    bolt_2.setCPULoad(25.0);
+    bolt_2.setCPULoad(20.0);
     
     bolt_3.shuffleGrouping("exclaim2");
-    bolt_3.setCPULoad(25.0);
+    bolt_3.setCPULoad(20.0);
     Config conf = new Config();
     conf.setNumAckers(0);
 
