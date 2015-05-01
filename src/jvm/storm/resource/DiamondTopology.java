@@ -21,6 +21,42 @@ import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
 public class DiamondTopology {
+	public static boolean isPrime(int n) 
+	  {
+	    boolean ret=true;
+	    for(int i=2;i<n;i++) {
+	        if(n%i==0)
+	            ret=false;
+	    }
+	    return ret;
+	  }
+	  
+	  public static int PrimeSearch(int time_loop,int index, long sleeptime)
+	  {
+	    int max=2;
+	    //find the largest prime number within [1,input]
+	    // percentage index up to 70% percentage = 10*index
+	    int[] cpu_para = new int[] {65,65,65,120,190,260,440,660};
+	    for(int j=0; j<time_loop ; j++)
+	    {
+	      for(int i =300; i<2000; i++)
+	      {
+	          if(i%cpu_para[index]==0)
+	          {
+	            try {
+	                Thread.sleep(sleeptime);
+	            } 
+	            catch (InterruptedException ie) {
+	                   //Handle exception
+	            }
+	          }
+
+	          if(isPrime(i))
+	              max=i;
+	      }
+	    }
+	    return max;
+	  }
 	public static class DiamondBolt extends BaseRichBolt {
 	 	
 	    OutputCollector _collector;
