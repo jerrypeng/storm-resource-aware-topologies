@@ -126,16 +126,16 @@ public class DiamondTopology {
        BoltDeclarer bolt4 = builder.setBolt("bolt_4", new DiamondBolt(1,2,5), 4);
        
        bolt1.shuffleGrouping("spout_head");
-       bolt1.setCPULoad(30.0);
+       bolt1.setCPULoad(20.0);
        
        bolt2.shuffleGrouping("spout_head");
-       bolt2.setCPULoad(30.0);
+       bolt2.setCPULoad(20.0);
        
        bolt3.shuffleGrouping("spout_head");
-       bolt3.setCPULoad(30.0);
+       bolt3.setCPULoad(20.0);
        
        bolt4.shuffleGrouping("spout_head");
-       bolt4.setCPULoad(40.0);
+       bolt4.setCPULoad(30.0);
 
         BoltDeclarer output = builder.setBolt("bolt_output_3", new DiamondBolt(1,2,5), 6);
         output.shuffleGrouping("bolt_1");
