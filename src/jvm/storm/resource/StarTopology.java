@@ -22,32 +22,85 @@ import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
 public class StarTopology {
-	public static void doWork(int level) {
-		double calc=0.0;
-		  for(double i=0; i<level; i++) {
-			  calc+=i/3.0*4.5+1.3;
-		  }
-		
-	}
-	
-	public static class StarSpout extends BaseRichSpout {
-	    SpoutOutputCollector _collector;
-	    private int level=0;
-	    public StarSpout(int level) {
-	    	this.level = level;
+	public static boolean isPrime(int n) 
+	  {
+	    boolean ret=true;
+	    for(int i=2;i<n;i++) {
+	        if(n%i==0)
+	            ret=false;
 	    }
-	    
+	    return ret;
+	  }
+	  
+	  public static int PrimeSearch(int time_loop,int index, long sleeptime)
+	  {
+	    int max=2;
+	    //find the largest prime number within [1,input]
+	    // percentage index up to 70% percentage = 10*index
+	    int[] cpu_para = new int[] {65,65,65,120,190,260,440,660};
+	    for(int j=0; j<time_loop ; j++)
+	    {
+	      for(int i =300; i<2000; i++)
+	      {
+	          if(i%cpu_para[index]==0)
+	          {
+	            try {
+	                Thread.sleep(sleeptime);
+	            } 
+	            catch (InterruptedException ie) {
+	                   //Handle exception
+	            }
+	          }
+
+	          if(isPrime(i))
+	              max=i;
+	      }
+	    }
+	    return max;
+	  }
+	public static class StarBolt extends BaseRichBolt {
+	 	
+	    OutputCollector _collector;
+	    int time_loop=0;
+	    int index=0;
+	    long sleeptime=0;
+	    public StarBolt(int time_loop,int index, long sleeptime) {
+	 		this.time_loop = time_loop;
+	 		this.index = index;
+	 	}
+	    @Override
+	    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
+	        _collector = collector;
+	    }
+	    @Override
+	    public void execute(Tuple tuple) {
+	    	PrimeSearch(this.time_loop, this.index, this.sleeptime);
+	        _collector.emit(tuple, new Values(tuple.getString(0) + "!"));
+	        //_collector.ack(tuple);
+	    }
+	    @Override
+	    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+	        declarer.declare(new Fields("word"));
+	    }
+	  }
+public static class StarSpout extends BaseRichSpout {
+	    SpoutOutputCollector _collector;
+	    int time_loop=0;
+	    int index=0;
+	    long sleeptime=0;
+	    public StarSpout(int time_loop,int index, long sleeptime) {
+	 		this.time_loop = time_loop;
+	 		this.index = index;
+	 	}
 	    @Override
 	    public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
 	      _collector = collector;
 	    }
 	    @Override
 	    public void nextTuple() {
-	    	//doWork(this.level);
-	    	 Random randomGenerator = new Random();
-	    	 Integer randomInt = randomGenerator.nextInt(1000000000);
-		    _collector.emit(new Values("jerry"), randomInt);
-		  
+	    	PrimeSearch(this.time_loop, this.index, this.sleeptime);
+	        _collector.emit(new Values("Jerry"));
+	        Utils.sleep(100);
 	    }
 	    @Override
 	    public void ack(Object id) {
@@ -60,49 +113,28 @@ public class StarTopology {
 	        declarer.declare(new Fields("word"));
 	    }
 	  }
-	public static class StarBolt extends BaseRichBolt {
-	    OutputCollector _collector;
-	    private int level=0;
-	    public StarBolt(int level) {
-	    	this.level = level;
-	    }
-	    @Override
-	    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
-	        _collector = collector;
-	    }
-	    @Override
-	    public void execute(Tuple tuple) {
-	    	//doWork(this.level);
-	        _collector.emit(tuple, new Values(tuple.getString(0) + "!"));
-	        _collector.ack(tuple);
-	    }
-	    @Override
-	    public void declareOutputFields(OutputFieldsDeclarer declarer) {
-	        declarer.declare(new Fields("word"));
-	    }
-	  }
 	
 	public static void main(String[] args) throws Exception {
 		int numSpout = 2;
 		int numBolt = 2;
-		int paralellism = 3*2*2;
+		int paralellism = 4;
 
 		TopologyBuilder builder = new TopologyBuilder();
 
-		BoltDeclarer center = builder.setBolt("center", new StarBolt(100),
-				paralellism*2);
-		center.setCPULoad(10.0);
+		BoltDeclarer center = builder.setBolt("center", new StarBolt(1,2,5),
+				12);
+		center.setCPULoad(20.0);
 
 		for (int i = 0; i < numSpout; i++) {
-			SpoutDeclarer spout = builder.setSpout("spout_" + i, new StarSpout(1000), paralellism);
+			SpoutDeclarer spout = builder.setSpout("spout_" + i, new StarSpout(1, 4, 1), 8);
 			center.shuffleGrouping("spout_" + i);
-			spout.setCPULoad(30.0);
+			spout.setCPULoad(50.0);
 		}
 
 		for (int i = 0; i < numBolt; i++) {
-			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new StarBolt(100), paralellism)
+			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new StarBolt(1,2,5), 6)
 					.shuffleGrouping("center");
-			bolt.setCPULoad(10.0);
+			bolt.setCPULoad(20.0);
 		}
 		
 		
