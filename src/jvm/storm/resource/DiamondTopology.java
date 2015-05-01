@@ -117,25 +117,25 @@ public class DiamondTopology {
 
         TopologyBuilder builder = new TopologyBuilder();
 
-        SpoutDeclarer spout = builder.setSpout("spout_head", new DiamondSpout(1, 4, 5), 4);
+        SpoutDeclarer spout = builder.setSpout("spout_head", new DiamondSpout(1, 4, 5), 6);
         spout.setCPULoad(50.0);
 
-       BoltDeclarer bolt1 = builder.setBolt("bolt_1", new DiamondBolt(1,2,5), 2);
-       BoltDeclarer bolt2 = builder.setBolt("bolt_2", new DiamondBolt(1,2,5), 2);
-       BoltDeclarer bolt3 = builder.setBolt("bolt_3", new DiamondBolt(1,2,5), 2);
-       BoltDeclarer bolt4 = builder.setBolt("bolt_4", new DiamondBolt(1,2,5), 2);
+       BoltDeclarer bolt1 = builder.setBolt("bolt_1", new DiamondBolt(1,2,5), 4);
+       BoltDeclarer bolt2 = builder.setBolt("bolt_2", new DiamondBolt(1,2,5), 4);
+       BoltDeclarer bolt3 = builder.setBolt("bolt_3", new DiamondBolt(1,2,5), 4);
+       BoltDeclarer bolt4 = builder.setBolt("bolt_4", new DiamondBolt(1,2,5), 4);
        
        bolt1.shuffleGrouping("spout_head");
-       bolt1.setCPULoad(20.0);
+       bolt1.setCPULoad(30.0);
        
        bolt2.shuffleGrouping("spout_head");
-       bolt2.setCPULoad(20.0);
+       bolt2.setCPULoad(30.0);
        
        bolt3.shuffleGrouping("spout_head");
-       bolt3.setCPULoad(20.0);
+       bolt3.setCPULoad(30.0);
        
        bolt4.shuffleGrouping("spout_head");
-       bolt4.setCPULoad(20.0);
+       bolt4.setCPULoad(40.0);
 
         BoltDeclarer output = builder.setBolt("bolt_output_3", new DiamondBolt(1,2,5), 6);
         output.shuffleGrouping("bolt_1");
