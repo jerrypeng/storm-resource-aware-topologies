@@ -117,7 +117,7 @@ public class DiamondTopology {
 
         TopologyBuilder builder = new TopologyBuilder();
 
-        SpoutDeclarer spout = builder.setSpout("spout_head", new DiamondSpout(1, 4, 1), 6);
+        SpoutDeclarer spout = builder.setSpout("spout_head", new DiamondSpout(1, 4, 1), 2);
         spout.setCPULoad(50.0);
 
        BoltDeclarer bolt1 = builder.setBolt("bolt_1", new DiamondBolt(1,2,5), 4);
