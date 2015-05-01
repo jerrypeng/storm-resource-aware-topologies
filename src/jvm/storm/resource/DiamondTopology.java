@@ -142,7 +142,7 @@ public class DiamondTopology {
         output.shuffleGrouping("bolt_2");
         output.shuffleGrouping("bolt_3");
         output.shuffleGrouping("bolt_4");
-        output.setCPULoad(20.0);
+        output.setCPULoad(30.0);
 
         Config conf = new Config();
         //conf.setDebug(true);
