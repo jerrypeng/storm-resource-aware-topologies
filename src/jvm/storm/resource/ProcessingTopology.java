@@ -13,7 +13,7 @@ import backtype.storm.topology.TopologyBuilder;
 
 public class ProcessingTopology {
 	public static void main(String[] args) throws Exception {
-		int paralellism = 4;
+		int paralellism = 2;
 
 		TopologyBuilder builder = new TopologyBuilder();
 
