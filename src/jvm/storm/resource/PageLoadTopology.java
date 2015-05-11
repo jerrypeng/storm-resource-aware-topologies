@@ -18,10 +18,10 @@ public class PageLoadTopology {
 
 		TopologyBuilder builder = new TopologyBuilder();
 
-		SpoutDeclarer spout = builder.setSpout("spout_head", new RandomLogSpout(), paralellism);
+		SpoutDeclarer spout = builder.setSpout("spout_head", new RandomLogSpout(), paralellism-1);
 		spout.setCPULoad(40.0);
 
-		BoltDeclarer bolt1 = builder.setBolt("bolt_transform", new TransformBolt(), paralellism);
+		BoltDeclarer bolt1 = builder.setBolt("bolt_transform", new TransformBolt(), paralellism+1);
 		bolt1.setCPULoad(40.0);
 		bolt1.shuffleGrouping("spout_head");
 		
