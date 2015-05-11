@@ -122,17 +122,17 @@ public static class StarSpout extends BaseRichSpout {
 		TopologyBuilder builder = new TopologyBuilder();
 
 		BoltDeclarer center = builder.setBolt("center", new StarBolt(1,2,5),
-				12);
+				8);
 		center.setCPULoad(20.0);
 
 		for (int i = 0; i < numSpout; i++) {
-			SpoutDeclarer spout = builder.setSpout("spout_" + i, new StarSpout(1, 4, 1), 8);
+			SpoutDeclarer spout = builder.setSpout("spout_" + i, new StarSpout(1, 4, 1), 6);
 			center.shuffleGrouping("spout_" + i);
 			spout.setCPULoad(50.0);
 		}
 
 		for (int i = 0; i < numBolt; i++) {
-			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new StarBolt(1,2,5), 6)
+			BoltDeclarer bolt = builder.setBolt("bolt_output_" + i, new StarBolt(1,2,5), 4)
 					.shuffleGrouping("center");
 			bolt.setCPULoad(20.0);
 		}
@@ -142,9 +142,9 @@ public static class StarSpout extends BaseRichSpout {
 		conf.setDebug(false);
 		conf.put(Config.TOPOLOGY_DEBUG, false);
 		
-		//conf.setNumAckers(0);
+		conf.setNumAckers(0);
 
-		conf.setNumWorkers(12);
+		//conf.setNumWorkers(12);
 		
 	
 
