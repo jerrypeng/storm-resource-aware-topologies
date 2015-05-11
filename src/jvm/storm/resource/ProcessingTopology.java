@@ -13,7 +13,7 @@ import backtype.storm.topology.TopologyBuilder;
 
 public class ProcessingTopology {
 	public static void main(String[] args) throws Exception {
-		int paralellism = 2;
+		int paralellism = 4;
 
 		TopologyBuilder builder = new TopologyBuilder();
 
@@ -50,11 +50,11 @@ public class ProcessingTopology {
 		bolt7.setCPULoad(10.0);
 
 		Config conf = new Config();
-		conf.setDebug(true);
+		conf.setDebug(false);
 
 		conf.setNumAckers(0);
 
-		conf.setNumWorkers(12);
+		//conf.setNumWorkers(12);
 
 		StormSubmitter.submitTopologyWithProgressBar(args[0], conf,
 				builder.createTopology());

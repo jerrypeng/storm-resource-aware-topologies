@@ -14,7 +14,7 @@ import backtype.storm.topology.TopologyBuilder;
 public class PageLoadTopology {
 	public static void main(String[] args) throws Exception {
 		//int numBolt = 3;
-		int paralellism = 3;
+		int paralellism = 6;
 
 		TopologyBuilder builder = new TopologyBuilder();
 
@@ -46,11 +46,11 @@ public class PageLoadTopology {
 		bolt6.shuffleGrouping("bolt_aggregate");
 
 		Config conf = new Config();
-		conf.setDebug(true);
+		conf.setDebug(false);
 
 		conf.setNumAckers(0);
 
-		conf.setNumWorkers(12);
+		//conf.setNumWorkers(12);
 
 		StormSubmitter.submitTopologyWithProgressBar(args[0], conf,
 				builder.createTopology());
