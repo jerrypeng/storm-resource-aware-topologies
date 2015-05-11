@@ -50,7 +50,7 @@ public class PageLoadTopology {
 
 		conf.setNumAckers(0);
 
-		//conf.setNumWorkers(12);
+		conf.setNumWorkers(12);
 
 		StormSubmitter.submitTopologyWithProgressBar(args[0], conf,
 				builder.createTopology());
