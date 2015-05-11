@@ -48,7 +48,7 @@ public class PageLoadTopology {
 		Config conf = new Config();
 		conf.setDebug(false);
 
-		conf.setNumAckers(0);
+		//conf.setNumAckers(0);
 
 		conf.setNumWorkers(12);
 

@@ -33,7 +33,7 @@ public class AggregationBolt extends BaseRichBolt{
     	word+=Byte.toString(b);
     	word+=Byte.toString(b);
       _collector.emit(tuple, new Values(word));
-      //_collector.ack(tuple);
+      _collector.ack(tuple);
     }
 
     @Override

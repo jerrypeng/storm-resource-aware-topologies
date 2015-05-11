@@ -33,7 +33,7 @@ public class TransformBolt extends BaseRichBolt{
     		int d = ((int)word.charAt(i)) + 10;
     	}
       _collector.emit(tuple, new Values(word));
-      //_collector.ack(tuple);
+      _collector.ack(tuple);
     }
 
     @Override

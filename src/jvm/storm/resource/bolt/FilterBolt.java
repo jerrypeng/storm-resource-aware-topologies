@@ -33,7 +33,7 @@ public class FilterBolt extends BaseRichBolt{
     	//Utils.sleep(length);
     	if(_rand.nextDouble()<0.8){
     		_collector.emit(tuple, new Values(tuple.getString(0)));
-    	    //_collector.ack(tuple);
+    	    _collector.ack(tuple);
     	}
     }
 
